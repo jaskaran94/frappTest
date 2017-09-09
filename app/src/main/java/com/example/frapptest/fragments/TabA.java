@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.frapptest.ConnectionOfflineException;
 import com.example.frapptest.R;
@@ -29,6 +30,7 @@ public class TabA extends BaseFragment {
     private RecyclerView mRecyclerView;
     private List<Model> mModels;
     private ModelAdapter adapter;
+    TextView error;
 
     public static TabA newInstance(Bundle bundle){
         TabA fragment = new TabA();
@@ -53,6 +55,7 @@ public class TabA extends BaseFragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setAdapter(adapter);
+        error = (TextView) rootView.findViewById(R.id.error);
         getData();
         return rootView;
     }
@@ -62,6 +65,7 @@ public class TabA extends BaseFragment {
         try{
             service = ApiAdapter.getApiService(getActivity());
         } catch (ConnectionOfflineException e) {
+            error.setVisibility(View.VISIBLE);
             return;
         }
         Call<List<Model>> call = service.getData();

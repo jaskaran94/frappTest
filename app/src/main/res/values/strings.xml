@@ -5,4 +5,5 @@
     <string name="offline_title">Connection offline</string>
     <string name="offline_message">Please check your internet connection</string>
     <string name="view_count">%1$s views</string>
+    <string name="no_favorites">No favorites has been added</string>
 </resources>

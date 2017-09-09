@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -73,9 +74,21 @@ public class ModelAdapter extends RecyclerView.Adapter<ModelAdapter.ViewHolder> 
                 holder.favorite.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_action_unmarked));
             }
         }
+
+        if (model.getType().equalsIgnoreCase("internship")) {
+            holder.typeHolder.setBackgroundDrawable(mContext.getResources().getDrawable(
+                    R.drawable.type_internship
+            ));
+        }else {
+            holder.typeHolder.setBackgroundDrawable(mContext.getResources().getDrawable(
+                    R.drawable.type_offer
+            ));
+        }
+
         holder.title.setText(model.getTitle());
         holder.desc.setText(model.getDesc());
-        holder.type.setText(model.getType());
+        String modelType = model.getType();
+        if (modelType != null)holder.type.setText(modelType.substring(0, 1).toUpperCase() + modelType.substring(1));
         holder.viewCount.setText(String.format(
                 mContext.getString(R.string.view_count),
                 Utils.convertToString(
@@ -92,6 +105,7 @@ public class ModelAdapter extends RecyclerView.Adapter<ModelAdapter.ViewHolder> 
     class ViewHolder extends RecyclerView.ViewHolder{
         TextView title, desc, viewCount, type;
         ImageView image, favorite;
+        RelativeLayout typeHolder;
         public ViewHolder(View itemView) {
             super(itemView);
             title = (TextView) itemView.findViewById(R.id.title);
@@ -101,6 +115,7 @@ public class ModelAdapter extends RecyclerView.Adapter<ModelAdapter.ViewHolder> 
             type = (TextView) itemView.findViewById(R.id.type);
             favorite = (ImageView) itemView.findViewById(R.id.mark_fav);
             if (fType.equalsIgnoreCase("A")) favorite.setVisibility(View.VISIBLE);
+            typeHolder = (RelativeLayout) itemView.findViewById(R.id.type_holder);
         }
     }
     public interface OnMarkFavorite{
