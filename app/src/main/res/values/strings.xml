@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">FrappTest</string>
+    <string name="error">Error</string>
+    <string name="activity_main_title">Home</string>
+    <string name="offline_title">Connection offline</string>
+    <string name="offline_message">Please check your internet connection</string>
 </resources>

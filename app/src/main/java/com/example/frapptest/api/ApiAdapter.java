@@ -17,7 +17,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiAdapter {
     private static volatile ApiService apiService;
-    public static final String BASE_URL = "";
+    public static final String BASE_URL = "http://54.254.198.83:8080";
 
     private ApiAdapter(){
 

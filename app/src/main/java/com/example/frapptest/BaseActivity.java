@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 
 /**
  * Created by jaskaranhome on 09/09/17.
@@ -24,6 +26,28 @@ public abstract class BaseActivity extends AppCompatActivity implements AppOpera
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getMainLayout());
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        if (!(this instanceof MainActivity)) {
+            if (getSupportActionBar() != null) {
+                getSupportActionBar().setTitle(getActionBarTitle());
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            }
+        }
+    }
+
+    protected String getActionBarTitle() {
+        return "Home";
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -81,6 +105,14 @@ public abstract class BaseActivity extends AppCompatActivity implements AppOpera
         super.onRestoreInstanceState(savedInstanceState);
     }
 
+    public void toggleProgress() {
+        hideProgressDialog();
+    }
+
+    protected void hideProgressDialog() {
+        if (isSuspended() || mProgressDialog == null || !mProgressDialog.isShowing()) return;
+        mProgressDialog.dismiss();
+    }
 
     @Override
     public boolean isSuspended() {
