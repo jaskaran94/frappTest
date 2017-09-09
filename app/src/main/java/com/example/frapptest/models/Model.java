@@ -3,6 +3,8 @@ package com.example.frapptest.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by jaskaranhome on 09/09/17.
  */
@@ -13,7 +15,19 @@ public class Model implements Parcelable{
     String title;
     String desc;
     String type;
+    @SerializedName("view-count")   //Json key is view-count
     long viewCount;
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
+
+    boolean isSelected;
+
     public Model(){
         super();
     }
@@ -64,7 +78,7 @@ public class Model implements Parcelable{
         desc = in.readString();
         type = in.readString();
         viewCount = in.readLong();
-
+        isSelected = in.readByte() != 0;
     }
 
     public static final Creator<Model> CREATOR = new Creator<Model>() {
@@ -91,5 +105,6 @@ public class Model implements Parcelable{
         dest.writeString(desc);
         dest.writeString(type);
         dest.writeLong(viewCount);
+        dest.writeByte((byte) (isSelected ? 1 : 0));
     }
 }

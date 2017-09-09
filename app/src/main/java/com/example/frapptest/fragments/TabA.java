@@ -40,7 +40,8 @@ public class TabA extends BaseFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mModels = new ArrayList<>();
-        adapter = new ModelAdapter(mModels);
+        adapter = new ModelAdapter(mModels, getActivity(), "A");
+        //adapter.setHasStableIds(true);
         setRetainInstance(true);
     }
 
@@ -50,6 +51,7 @@ public class TabA extends BaseFragment {
         View rootView = inflater.inflate(R.layout.fragment_tab, container, false);
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setAdapter(adapter);
         getData();
         return rootView;

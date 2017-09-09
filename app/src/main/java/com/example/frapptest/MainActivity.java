@@ -4,9 +4,12 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 
+import com.example.frapptest.adapters.ModelAdapter;
 import com.example.frapptest.adapters.ViewPagerAdapter;
+import com.example.frapptest.fragments.TabB;
+import com.example.frapptest.models.Model;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements ModelAdapter.OnMarkFavorite{
 
     private TabLayout tabLayout;
     private ViewPager mViewPager;
@@ -36,6 +39,7 @@ public class MainActivity extends BaseActivity {
     private void setUpViewPager(){
         String titles[] = {"List", "Favourites"};
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
+        mViewPager.setOffscreenPageLimit(2);
         adapter = new ViewPagerAdapter(this.getSupportFragmentManager(),
                 titles.length,
                 titles,
@@ -47,4 +51,11 @@ public class MainActivity extends BaseActivity {
         tabLayout.setupWithViewPager(mViewPager);
     }
 
+    @Override
+    public void onMarked(Model model, boolean mark) {
+        TabB fragment = (TabB) adapter.getRegisteredFragment(1);
+        if (fragment != null) {
+            fragment.updateList(model, mark);
+        }
+    }
 }
